@@ -23,13 +23,13 @@ import 'package:flutter/widgets.dart';
 //   * alternative labeling
 //   * stepper feedback in the case of high-latency interactions
 
-/// The state of a [Step] which is used to control the style of the circle and
+/// The state of a [CustomStep] which is used to control the style of the circle and
 /// text.
 ///
 /// See also:
 ///
-///  * [Step]
-enum StepState {
+///  * [CustomStep]
+enum CustomStepState {
   /// A step that displays its index in its circle.
   indexed,
 
@@ -47,8 +47,8 @@ enum StepState {
   error,
 }
 
-/// Defines the [Stepper]'s main axis.
-enum StepperType {
+/// Defines the [CustomStepper]'s main axis.
+enum CustomStepperType {
   /// A vertical layout of the steps with their content in-between the titles.
   vertical,
 
@@ -59,7 +59,7 @@ enum StepperType {
 /// Container for all the information necessary to build a Stepper widget's
 /// forward and backward controls for any given step.
 ///
-/// Used by [Stepper.controlsBuilder].
+/// Used by [CustomStepper.controlsBuilder].
 @immutable
 class ControlsDetails {
   /// Creates a set of details describing the Stepper.
@@ -70,7 +70,7 @@ class ControlsDetails {
     this.onStepContinue,
   });
 
-  /// Index that is active for the surrounding [Stepper] widget. This may be
+  /// Index that is active for the surrounding [CustomStepper] widget. This may be
   /// different from [stepIndex] if the user has just changed steps and we are
   /// currently animating toward that step.
   final int currentStep;
@@ -92,7 +92,7 @@ class ControlsDetails {
   final VoidCallback? onStepCancel;
 
   /// True if the indicated step is also the current active step. If the user has
-  /// just activated the transition to a new step, some [Stepper.type] values will
+  /// just activated the transition to a new step, some [CustomStepper.type] values will
   /// lead to both steps being rendered for the duration of the animation shifting
   /// between steps.
   bool get isActive => currentStep == stepIndex;
@@ -101,12 +101,12 @@ class ControlsDetails {
 /// A builder that creates a widget given the two callbacks `onStepContinue` and
 /// `onStepCancel`.
 ///
-/// Used by [Stepper.controlsBuilder].
+/// Used by [CustomStepper.controlsBuilder].
 ///
 /// See also:
 ///
 ///  * [WidgetBuilder], which is similar but only takes a [BuildContext].
-typedef ControlsWidgetBuilder = Widget Function(
+typedef CustomControlsWidgetBuilder = Widget Function(
     BuildContext context, ControlsDetails details);
 
 const TextStyle _kStepStyle = TextStyle(
@@ -123,24 +123,24 @@ const double _kStepSize = 24.0;
 const double _kTriangleHeight =
     _kStepSize * 0.866025; // Triangle height. sqrt(3.0) / 2.0
 
-/// A material step used in [Stepper]. The step can have a title and subtitle,
+/// A material step used in [CustomStepper]. The step can have a title and subtitle,
 /// an icon within its circle, some content and a state that governs its
 /// styling.
 ///
 /// See also:
 ///
-///  * [Stepper]
+///  * [CustomStepper]
 ///  * <https://material.io/archive/guidelines/components/steppers.html>
 @immutable
-class Step {
-  /// Creates a step for a [Stepper].
+class CustomStep {
+  /// Creates a step for a [CustomStepper].
   ///
   /// The [title], [content], and [state] arguments must not be null.
-  const Step({
+  const CustomStep({
     required this.title,
     this.subtitle,
     required this.content,
-    this.state = StepState.indexed,
+    this.state = CustomStepState.indexed,
     this.isActive = false,
     this.label,
   })  : assert(title != null),
@@ -163,12 +163,12 @@ class Step {
 
   /// The state of the step which determines the styling of its components
   /// and whether steps are interactive.
-  final StepState state;
+  final CustomStepState state;
 
   /// Whether or not the step is active. The flag only influences styling.
   final bool isActive;
 
-  /// Only [StepperType.horizontal], Optional widget that appears under the [title].
+  /// Only [CustomStepperType.horizontal], Optional widget that appears under the [title].
   /// By default, uses the `bodyLarge` theme.
   final Widget? label;
 }
@@ -183,7 +183,7 @@ class Step {
 /// provides.
 ///
 /// {@tool dartpad}
-/// An example the shows how to use the [Stepper], and the [Stepper] UI
+/// An example the shows how to use the [CustomStepper], and the [CustomStepper] UI
 /// appearance.
 ///
 /// ** See code in examples/api/lib/material/stepper/stepper.0.dart **
@@ -191,9 +191,9 @@ class Step {
 ///
 /// See also:
 ///
-///  * [Step]
+///  * [CustomStep]
 ///  * <https://material.io/archive/guidelines/components/steppers.html>
-class Stepper extends StatefulWidget {
+class CustomStepper extends StatefulWidget {
   /// Creates a stepper from a list of steps.
   ///
   /// This widget is not meant to be rebuilt with a different list of steps
@@ -201,11 +201,11 @@ class Stepper extends StatefulWidget {
   /// new one.
   ///
   /// The [steps], [type], and [currentStep] arguments must not be null.
-  const Stepper({
+  const CustomStepper({
     super.key,
     required this.steps,
     this.physics,
-    this.type = StepperType.vertical,
+    this.type = CustomStepperType.vertical,
     this.currentStep = 0,
     this.onStepTapped,
     this.onStepContinue,
@@ -221,7 +221,7 @@ class Stepper extends StatefulWidget {
   /// The steps of the stepper whose titles, subtitles, icons always get shown.
   ///
   /// The length of [steps] must not change.
-  final List<Step> steps;
+  final List<CustomStep> steps;
 
   /// How the stepper's scroll view should respond to user input.
   ///
@@ -233,10 +233,10 @@ class Stepper extends StatefulWidget {
   final ScrollPhysics? physics;
 
   /// The type of stepper that determines the layout. In the case of
-  /// [StepperType.horizontal], the content of the current step is displayed
-  /// underneath as opposed to the [StepperType.vertical] case where it is
+  /// [CustomStepperType.horizontal], the content of the current step is displayed
+  /// underneath as opposed to the [CustomStepperType.vertical] case where it is
   /// displayed in-between.
-  final StepperType type;
+  final CustomStepperType type;
 
   /// The index into [steps] of the current step whose content is displayed.
   final int currentStep;
@@ -307,21 +307,22 @@ class Stepper extends StatefulWidget {
   /// ```
   /// ** See code in examples/api/lib/material/stepper/stepper.controls_builder.0.dart **
   /// {@end-tool}
-  final ControlsWidgetBuilder? controlsBuilder;
+  final CustomControlsWidgetBuilder? controlsBuilder;
 
-  /// The elevation of this stepper's [Material] when [type] is [StepperType.horizontal].
+  /// The elevation of this stepper's [Material] when [type] is [CustomStepperType.horizontal].
   final double? elevation;
 
   /// custom margin on vertical stepper.
   final EdgeInsetsGeometry? margin;
 
   @override
-  State<Stepper> createState() => _StepperState();
+  State<CustomStepper> createState() => _CustomStepperState();
 }
 
-class _StepperState extends State<Stepper> with TickerProviderStateMixin {
+class _CustomStepperState extends State<CustomStepper>
+    with TickerProviderStateMixin {
   late List<GlobalKey> _keys;
-  final Map<int, StepState> _oldStates = <int, StepState>{};
+  final Map<int, CustomStepState> _oldStates = <int, CustomStepState>{};
 
   @override
   void initState() {
@@ -337,7 +338,7 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
   }
 
   @override
-  void didUpdateWidget(Stepper oldWidget) {
+  void didUpdateWidget(CustomStepper oldWidget) {
     super.didUpdateWidget(oldWidget);
     assert(widget.steps.length == oldWidget.steps.length);
 
@@ -363,7 +364,7 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
   }
 
   bool _isLabel() {
-    for (final Step step in widget.steps) {
+    for (final CustomStep step in widget.steps) {
       if (step.label != null) {
         return true;
       }
@@ -380,32 +381,32 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
   }
 
   Widget _buildCircleChild(int index, bool oldState) {
-    final StepState state =
+    final CustomStepState state =
         oldState ? _oldStates[index]! : widget.steps[index].state;
     final bool isDarkActive = _isDark() && widget.steps[index].isActive;
     assert(state != null);
     switch (state) {
-      case StepState.indexed:
-      case StepState.disabled:
+      case CustomStepState.indexed:
+      case CustomStepState.disabled:
         return Text(
           '${index + 1}',
           style: isDarkActive
               ? _kStepStyle.copyWith(color: Colors.black87)
               : _kStepStyle,
         );
-      case StepState.editing:
+      case CustomStepState.editing:
         return Icon(
           Icons.edit,
           color: isDarkActive ? _kCircleActiveDark : _kCircleActiveLight,
           size: 18.0,
         );
-      case StepState.complete:
+      case CustomStepState.complete:
         return Icon(
           Icons.check,
           color: isDarkActive ? _kCircleActiveDark : _kCircleActiveLight,
           size: 18.0,
         );
-      case StepState.error:
+      case CustomStepState.error:
         return const Text('!', style: _kStepStyle);
     }
   }
@@ -436,8 +437,8 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
           shape: BoxShape.circle,
         ),
         child: Center(
-          child: _buildCircleChild(
-              index, oldState && widget.steps[index].state == StepState.error),
+          child: _buildCircleChild(index,
+              oldState && widget.steps[index].state == CustomStepState.error),
         ),
       ),
     );
@@ -460,8 +461,10 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
             child: Align(
               alignment: const Alignment(
                   0.0, 0.8), // 0.8 looks better than the geometrical 0.33.
-              child: _buildCircleChild(index,
-                  oldState && widget.steps[index].state != StepState.error),
+              child: _buildCircleChild(
+                  index,
+                  oldState &&
+                      widget.steps[index].state != CustomStepState.error),
             ),
           ),
         ),
@@ -477,13 +480,13 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
         firstCurve: const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
         secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
         sizeCurve: Curves.fastOutSlowIn,
-        crossFadeState: widget.steps[index].state == StepState.error
+        crossFadeState: widget.steps[index].state == CustomStepState.error
             ? CrossFadeState.showSecond
             : CrossFadeState.showFirst,
         duration: kThemeAnimationDuration,
       );
     } else {
-      if (widget.steps[index].state != StepState.error) {
+      if (widget.steps[index].state != CustomStepState.error) {
         return _buildCircle(index, false);
       } else {
         return _buildTriangle(index, false);
@@ -584,15 +587,15 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
 
     assert(widget.steps[index].state != null);
     switch (widget.steps[index].state) {
-      case StepState.indexed:
-      case StepState.editing:
-      case StepState.complete:
+      case CustomStepState.indexed:
+      case CustomStepState.editing:
+      case CustomStepState.complete:
         return textTheme.bodyLarge!;
-      case StepState.disabled:
+      case CustomStepState.disabled:
         return textTheme.bodyLarge!.copyWith(
           color: _isDark() ? _kDisabledDark : _kDisabledLight,
         );
-      case StepState.error:
+      case CustomStepState.error:
         return textTheme.bodyLarge!.copyWith(
           color: _isDark() ? _kErrorDark : _kErrorLight,
         );
@@ -605,15 +608,15 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
 
     assert(widget.steps[index].state != null);
     switch (widget.steps[index].state) {
-      case StepState.indexed:
-      case StepState.editing:
-      case StepState.complete:
+      case CustomStepState.indexed:
+      case CustomStepState.editing:
+      case CustomStepState.complete:
         return textTheme.bodySmall!;
-      case StepState.disabled:
+      case CustomStepState.disabled:
         return textTheme.bodySmall!.copyWith(
           color: _isDark() ? _kDisabledDark : _kDisabledLight,
         );
-      case StepState.error:
+      case CustomStepState.error:
         return textTheme.bodySmall!.copyWith(
           color: _isDark() ? _kErrorDark : _kErrorLight,
         );
@@ -626,15 +629,15 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
 
     assert(widget.steps[index].state != null);
     switch (widget.steps[index].state) {
-      case StepState.indexed:
-      case StepState.editing:
-      case StepState.complete:
+      case CustomStepState.indexed:
+      case CustomStepState.editing:
+      case CustomStepState.complete:
         return textTheme.bodyLarge!;
-      case StepState.disabled:
+      case CustomStepState.disabled:
         return textTheme.bodyLarge!.copyWith(
           color: _isDark() ? _kDisabledDark : _kDisabledLight,
         );
-      case StepState.error:
+      case CustomStepState.error:
         return textTheme.bodyLarge!.copyWith(
           color: _isDark() ? _kErrorDark : _kErrorLight,
         );
@@ -759,7 +762,7 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
             key: _keys[i],
             children: <Widget>[
               InkWell(
-                onTap: widget.steps[i].state != StepState.disabled
+                onTap: widget.steps[i].state != CustomStepState.disabled
                     ? () {
                         // In the vertical case we need to scroll to the newly tapped
                         // step.
@@ -772,7 +775,8 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
                         widget.onStepTapped?.call(i);
                       }
                     : null,
-                canRequestFocus: widget.steps[i].state != StepState.disabled,
+                canRequestFocus:
+                    widget.steps[i].state != CustomStepState.disabled,
                 child: _buildVerticalHeader(i),
               ),
               _buildVerticalBody(i),
@@ -786,12 +790,12 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
     final List<Widget> children = <Widget>[
       for (int i = 0; i < widget.steps.length; i += 1) ...<Widget>[
         InkResponse(
-          onTap: widget.steps[i].state != StepState.disabled
+          onTap: widget.steps[i].state != CustomStepState.disabled
               ? () {
                   widget.onStepTapped?.call(i);
                 }
               : null,
-          canRequestFocus: widget.steps[i].state != StepState.disabled,
+          canRequestFocus: widget.steps[i].state != CustomStepState.disabled,
           child: Row(
             children: <Widget>[
               SizedBox(
@@ -877,7 +881,7 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
     assert(debugCheckHasMaterial(context));
     assert(debugCheckHasMaterialLocalizations(context));
     assert(() {
-      if (context.findAncestorWidgetOfExactType<Stepper>() != null) {
+      if (context.findAncestorWidgetOfExactType<CustomStepper>() != null) {
         throw FlutterError(
           'Steppers must not be nested.\n'
           'The material specification advises that one should avoid embedding '
@@ -889,9 +893,9 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
     }());
     assert(widget.type != null);
     switch (widget.type) {
-      case StepperType.vertical:
+      case CustomStepperType.vertical:
         return _buildVertical();
-      case StepperType.horizontal:
+      case CustomStepperType.horizontal:
         return _buildHorizontal();
     }
   }
