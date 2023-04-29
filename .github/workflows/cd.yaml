@@ -24,7 +24,6 @@ jobs:
       - run: flutter config --enable-web
       - run: flutter pub get
       - name: Build for web
-        # working-directory: example/ # assuming example/ project folder should be built. remove this line if project root folder should be built.
         run: flutter build web --release
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@3.7.1
