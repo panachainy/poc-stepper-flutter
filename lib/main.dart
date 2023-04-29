@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:poc_stepper_flutter/customStepper.dart';
 
 void main() {
   runApp(MyApp());
@@ -8,11 +9,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter App Learning',
-        theme: ThemeData(
-          primarySwatch: Colors.green,
-        ),
-        home: MyHomePage());
+      title: 'Flutter App Learning',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      home: MyHomePage(),
+    );
   }
 }
 
@@ -30,9 +32,9 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text("Flutter Stepper"),
       ),
-      body: Stepper(
+      body: CustomStepper(
         steps: getSteps(),
-        type: StepperType.horizontal,
+        type: CustomStepperType.horizontal,
         currentStep: currentStep,
         onStepTapped: (int step) {
           setState(() {
@@ -49,9 +51,9 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  List<Step> getSteps() {
+  List<CustomStep> getSteps() {
     return [
-      Step(
+      CustomStep(
         title: const Text('Personal Info'), content: Container(),
         //   Column(
         //     children: <Widget>[
@@ -64,10 +66,13 @@ class _MyHomePageState extends State<MyHomePage> {
         //     ],
         //   ),
         isActive: currentStep >= 0,
-        state: currentStep == 0 ? StepState.editing : StepState.complete,
+        state: currentStep == 0
+            ? CustomStepState.editing
+            : CustomStepState.complete,
         //   // label: Icon(Icons.person),
+        activeIcon: const Icon(Icons.home),
       ),
-      Step(
+      CustomStep(
         title: const Text('Address Details'),
         content: Column(
           children: <Widget>[
@@ -81,12 +86,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         isActive: currentStep >= 1,
         state: currentStep == 1
-            ? StepState.editing
+            ? CustomStepState.editing
             : currentStep < 1
-                ? StepState.disabled
-                : StepState.complete,
+                ? CustomStepState.disabled
+                : CustomStepState.complete,
       ),
-      Step(
+      CustomStep(
         title: const Text("Bank Details"),
         content: Column(
           children: <Widget>[
@@ -100,10 +105,10 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         isActive: currentStep >= 2,
         state: currentStep == 2
-            ? StepState.editing
+            ? CustomStepState.editing
             : currentStep < 2
-                ? StepState.disabled
-                : StepState.complete,
+                ? CustomStepState.disabled
+                : CustomStepState.complete,
       ),
     ];
   }
