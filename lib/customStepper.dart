@@ -5,19 +5,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-// import 'button_style.dart';
-// import 'color_scheme.dart';
-// import 'colors.dart';
-// import 'debug.dart';
-// import 'icons.dart';
-// import 'ink_well.dart';
-// import 'material.dart';
-// import 'material_localizations.dart';
-// import 'material_state.dart';
-// import 'text_button.dart';
-// import 'text_theme.dart';
-// import 'theme.dart';
-
 // TODO(dragostis): Missing functionality:
 //   * mobile horizontal mode with adding/removing steps
 //   * alternative labeling
