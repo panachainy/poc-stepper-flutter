@@ -130,6 +130,7 @@ class CustomStep {
     this.state = CustomStepState.indexed,
     this.isActive = false,
     this.label,
+    this.activeIcon,
   })  : assert(title != null),
         assert(content != null),
         assert(state != null);
@@ -158,6 +159,8 @@ class CustomStep {
   /// Only [CustomStepperType.horizontal], Optional widget that appears under the [title].
   /// By default, uses the `bodyLarge` theme.
   final Widget? label;
+
+  final Widget? activeIcon;
 }
 
 /// A material stepper widget that displays progress through a sequence of
@@ -367,11 +370,17 @@ class _CustomStepperState extends State<CustomStepper>
     );
   }
 
-  Widget _buildCircleChild(int index, bool oldState) {
+  Widget _buildCircleChild(
+    int index,
+    bool oldState,
+    Widget? activeIcon,
+  ) {
     final CustomStepState state =
         oldState ? _oldStates[index]! : widget.steps[index].state;
     final bool isDarkActive = _isDark() && widget.steps[index].isActive;
+
     assert(state != null);
+
     switch (state) {
       case CustomStepState.indexed:
       case CustomStepState.disabled:
@@ -382,6 +391,10 @@ class _CustomStepperState extends State<CustomStepper>
               : _kStepStyle,
         );
       case CustomStepState.editing:
+        if (activeIcon != null) {
+          return activeIcon;
+        }
+
         return Icon(
           Icons.edit,
           color: isDarkActive ? _kCircleActiveDark : _kCircleActiveLight,
@@ -424,8 +437,11 @@ class _CustomStepperState extends State<CustomStepper>
           shape: BoxShape.circle,
         ),
         child: Center(
-          child: _buildCircleChild(index,
-              oldState && widget.steps[index].state == CustomStepState.error),
+          child: _buildCircleChild(
+            index,
+            oldState && widget.steps[index].state == CustomStepState.error,
+            widget.steps[index].activeIcon,
+          ),
         ),
       ),
     );
@@ -449,9 +465,10 @@ class _CustomStepperState extends State<CustomStepper>
               alignment: const Alignment(
                   0.0, 0.8), // 0.8 looks better than the geometrical 0.33.
               child: _buildCircleChild(
-                  index,
-                  oldState &&
-                      widget.steps[index].state != CustomStepState.error),
+                index,
+                oldState && widget.steps[index].state != CustomStepState.error,
+                widget.steps[index].activeIcon,
+              ),
             ),
           ),
         ),

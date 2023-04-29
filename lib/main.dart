@@ -70,6 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ? CustomStepState.editing
             : CustomStepState.complete,
         //   // label: Icon(Icons.person),
+        activeIcon: const Icon(Icons.home),
       ),
       CustomStep(
         title: const Text('Address Details'),
