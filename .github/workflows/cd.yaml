@@ -4,6 +4,8 @@ name: Deploy Web
 on:
   push
 
+permissions:
+  contents: write
 jobs:
   deploy-for-web:
     runs-on: ubuntu-latest
