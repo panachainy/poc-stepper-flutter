@@ -1,0 +1,22 @@
+{
+  "cSpell.words": [],
+  "jsonToDart.codeGenerator": "Freezed",
+  "jsonToDart.copyWith": true,
+  "jsonToDart.avoidDynamicTypes": true,
+  "jsonToDart.immutable": true,
+  "jsonToDart.sortConstructorsFirst": true,
+  "jsonToDart.runBuilder": false,
+  "jsonToDart.nullSafety": true,
+  "[markdown]": {
+    "files.encoding": "utf8"
+  },
+  "dart.flutterSdkPath": ".fvm/flutter_sdk",
+  // Remove .fvm files from search
+  "search.exclude": {
+    "**/.fvm": true
+  },
+  // Remove from file watching
+  "files.watcherExclude": {
+    "**/.fvm": true
+  }
+}
