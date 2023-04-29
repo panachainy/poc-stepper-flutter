@@ -2,7 +2,9 @@ name: Deploy Web
 
 # run on tag creation
 on:
-  push
+  push:
+    tags:
+      - "*"
 
 permissions:
   contents: write
