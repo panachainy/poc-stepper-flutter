@@ -28,7 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Flutter Stepper"),
+        title: const Text("Flutter Stepper"),
       ),
       body: Stepper(
         steps: getSteps(),
@@ -52,29 +52,30 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Step> getSteps() {
     return [
       Step(
-        title: new Text('Personal Info'),
-        content: Column(
-          children: <Widget>[
-            TextFormField(
-              decoration: InputDecoration(labelText: 'Name'),
-            ),
-            TextFormField(
-              decoration: InputDecoration(labelText: 'Email Address'),
-            ),
-          ],
-        ),
+        title: const Text('Personal Info'), content: Container(),
+        //   Column(
+        //     children: <Widget>[
+        //       TextFormField(
+        //         decoration: const InputDecoration(labelText: 'Name'),
+        //       ),
+        //       TextFormField(
+        //         decoration: const InputDecoration(labelText: 'Email Address'),
+        //       ),
+        //     ],
+        //   ),
         isActive: currentStep >= 0,
         state: currentStep == 0 ? StepState.editing : StepState.complete,
+        //   // label: Icon(Icons.person),
       ),
       Step(
-        title: new Text('Address Details'),
+        title: const Text('Address Details'),
         content: Column(
           children: <Widget>[
             TextFormField(
-              decoration: InputDecoration(labelText: 'Home Address'),
+              decoration: const InputDecoration(labelText: 'Home Address'),
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Mobile No'),
+              decoration: const InputDecoration(labelText: 'Mobile No'),
             ),
           ],
         ),
@@ -86,14 +87,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 : StepState.complete,
       ),
       Step(
-        title: new Text("Bank Details"),
+        title: const Text("Bank Details"),
         content: Column(
           children: <Widget>[
             TextFormField(
-              decoration: InputDecoration(labelText: 'Account No'),
+              decoration: const InputDecoration(labelText: 'Account No'),
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: 'IFSC Code'),
+              decoration: const InputDecoration(labelText: 'IFSC Code'),
             ),
           ],
         ),
